@@ -26,15 +26,21 @@ public class Main {
       int tmp;
       int i, j;
       int counter=0;
-      for ( i = 1; i < rozmiar; i++ )
+      int zmiana=1;
+      
+      for ( i = 1; i < rozmiar && zmiana==1; i++ ) {
+         zmiana=0;
          for ( j = 1; j < rozmiar - i + 1; j++ ) {
-            counter++;
+            counter++; 
             if ( tablica[j-1] > tablica[j] ) {
+               zmiana=1;
                tmp = tablica[j-1];
                tablica[j-1] = tablica[j];
                tablica[j] = tmp;
             }
          }
+          System.out.println("Zmiana w iteracji "+ i +": " + zmiana);
+      }
       System.out.println("Iteracje babel "+counter);
    }
 
@@ -70,20 +76,32 @@ public class Main {
          int r;
          System.out.println("Podaj rozmiar: ");
          r = Integer.parseInt(in.readLine());
-         int[] t = new int[r];
-         wczytaj_tablice(t, r);
-          int[] tab = t;
-          int[] tablica = t;
+         
+         //stworz i wygeneruj tablice
+         int[] t1 = new int[r];
+         wczytaj_tablice(t1, r);
+         
+         //zrob kopie tej tablicy, zeby testowac rozne algorytmy
+          int[] t2 = new int[r];
+          int[] t3 = new int[r];
 
-
+          for (int i=0; i<r; i++) {
+            t2[i]=t1[i];
+            t3[i]=t1[i];
+          }
+          
          System.out.println("Tablica przed posortowaniem:");
-         wypisz_tablice(t, r);
+         wypisz_tablice(t1, r);
 
-         babelek(t, r);
-         babel(tab, r);
-         Arrays.sort(tablica);
-         System.out.println("Tablica posortowana:");
-         wypisz_tablice(tab, r);
+         babelek(t1, r);
+
+         babel(t2, r);
+         Arrays.sort(t3);
+         System.out.println("Tablica posortowana bablem:");
+         wypisz_tablice(t2, r);
+
+         System.out.println("Tablica posortowana Array.sort:");
+         wypisz_tablice(t3, r);
  
       } catch(IOException e) {
       }
